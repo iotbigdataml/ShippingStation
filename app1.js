@@ -58,7 +58,7 @@ $scope.funcA = function(){
 
             }).then(function successCallback(response) {
 
-              alert(response.data);
+            
 
 
             }, function errorCallback(response) {
@@ -77,7 +77,7 @@ $scope.funcA = function(){
 
             }).then(function successCallback(response) {
 
-              alert(response.data);
+           
 
 
             }, function errorCallback(response) {
@@ -96,7 +96,7 @@ $scope.funcA = function(){
 
             }).then(function successCallback(response) {
 
-              alert(response.data);
+           
 
 
             }, function errorCallback(response) {
