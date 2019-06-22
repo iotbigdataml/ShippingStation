@@ -7,7 +7,7 @@ app.controller("shippingcontroller",['$scope','$http', function($scope, $http){
 
   $http({
       method: 'GET',
-      url: 'http://127.0.0.1:8083/test.txt'
+      url: 'http://127.0.0.1:8080/test.txt'
 
     }).then(function successCallback(response) {
 
@@ -62,7 +62,7 @@ app.controller("shippingcontroller",['$scope','$http', function($scope, $http){
 
 // Function to put bots on maintenance
 
-        $scope.maintenence = function(){
+        $scope.maintenenceOn = function(){
           $http({
               method: 'GET',
               url: 'http://29041a89.ngrok.io/maintenance'
@@ -80,6 +80,29 @@ app.controller("shippingcontroller",['$scope','$http', function($scope, $http){
 
 
         };
+
+
+        // Function to put bots out of maintenance
+
+                $scope.maintenenceOff = function(){
+                  $http({
+                      method: 'GET',
+                      url: 'http://29041a89.ngrok.io/maintenance'
+
+                    }).then(function successCallback(response) {
+
+
+
+
+                    }, function errorCallback(response) {
+
+                      alert("Error. Try Again!");
+
+                    });
+
+
+                };
+
 
 //Function to fulfill order on button click
 
