@@ -3,11 +3,24 @@ app.controller("shippingcontroller",['$scope','$http', function($scope, $http){
 
 // Fetch data from url every one second
 
- setInterval(function(){
+  $http({
+    method: 'GET',
+    url: 'http://127.0.0.1:8080/url.txt'
+  }).then(function successCallback(response) {
 
+    $scope.urlobj = response.data;
+
+  }, function errorCallback(response) {
+
+    alert("Error. Try Again!");
+
+  })
+
+
+ setInterval(function(){
   $http({
       method: 'GET',
-      url: 'http://a6bb270c.ngrok.io/api/orders/loaded'
+      url: $scope.urlobj.url +'/api/orders/loaded'
 
     }).then(function successCallback(response) {
 
@@ -24,7 +37,7 @@ setInterval(function(){
 
  $http({
      method: 'GET',
-     url: 'http://a6bb270c.ngrok.io/api/orders/cancelled'
+     url: $scope.urlobj.url+'/api/orders/cancelled'
 
    }).then(function successCallback(response) {
 
@@ -130,7 +143,7 @@ setInterval(function(){
 
           $http({
               method: 'GET',
-              url: 'http://a6bb270c.ngrok.io/api/markOrderFilled/'+id
+              url: $scope.urlobj.url+'/api/markOrderFilled/'+id
 
             }).then(function successCallback(response) {
 
