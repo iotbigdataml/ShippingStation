@@ -7,18 +7,37 @@ app.controller("shippingcontroller",['$scope','$http', function($scope, $http){
 
   $http({
       method: 'GET',
-      url: 'http://127.0.0.1:8080/test.txt'
+      url: 'http://a6bb270c.ngrok.io/api/orders/loaded'
 
     }).then(function successCallback(response) {
 
-      $scope.users = response.data;
+      $scope.loaded = response.data;
 
     }, function errorCallback(response) {
 
       alert("Error. Try Again!");
 
     })
-},1000);
+},10000);
+
+setInterval(function(){
+
+ $http({
+     method: 'GET',
+     url: 'http://a6bb270c.ngrok.io/api/orders/cancelled'
+
+   }).then(function successCallback(response) {
+
+     $scope.cancelled = response.data;
+
+   }, function errorCallback(response) {
+
+     alert("Error. Try Again!");
+
+   })
+},10000);
+
+
 
 // Function to control bot one
         $scope.botone = function(){
@@ -111,7 +130,7 @@ app.controller("shippingcontroller",['$scope','$http', function($scope, $http){
 
           $http({
               method: 'GET',
-              url: 'http://6ec0bb0e.ngrok.io/api/markOrderFilled/'+id
+              url: 'http://a6bb270c.ngrok.io/api/markOrderFilled/'+id
 
             }).then(function successCallback(response) {
 

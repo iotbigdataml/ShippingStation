@@ -32,16 +32,21 @@
 <div class="tbl-content">
 <table class="table-fill">
       <tbody class="table-hover">
-        <tr ng-repeat="order in users.Orders | groupBy:'orderID'">
+        <tr ng-repeat="order in loaded.Orders | groupBy:'orderID'">
           <td>
             <span class="groupHeader" ng-show="order.group_by_key">{{order.orderID}}</span>
           </td>
           <td>
-            <span class="groupValue">{{order.name}}</span>
+            <span class="groupValue" ng-if="order.productID == 1" >Red</span>
+            <span class="groupValue" ng-if="order.productID == 2" >Green</span>
+            <span class="groupValue" ng-if="order.productID == 3" >Blue</span>
+            <span class="groupValue" ng-if="order.productID == 4" >Black</span>
+            <span class="groupValue" ng-if="order.productID == 5" >Yellow</span>
+            <span class="groupValue" ng-if="order.productID == 6" >White</span>
           </td>
 
           <td>
-              <span class="groupValue">{{order.quantity}}</span>
+              <span class="groupValue">{{order.qtyOrdered}}</span>
           </td>
           <td>
             <button class="large green button groupHeader" ng-show="order.group_by_key" ng-click="fulfillOrder(order.orderID)">Fulfill</button>
@@ -53,7 +58,7 @@
 
 <!-- Second table listing all cancelled orders -->
 <div class="col-xs-6">
-  <h3 class="table-title">Orders to be cancelled</h3>
+  <h3 class="table-title">Cancelled Orders</h3>
   <div>
    <table>
      <thead>
@@ -69,16 +74,21 @@
  <div class="tbl-content">
  <table class="table-fill">
      <tbody class="table-hover">
-       <tr ng-repeat="order in users.Orders | groupBy:'orderID'">
+       <tr ng-repeat="order in cancelled.Orders | groupBy:'orderID'">
          <td>
            <span class="groupHeader" ng-show="order.group_by_key">{{order.orderID}}</span>
          </td>
          <td>
-           <span class="groupValue">{{order.name}}</span>
+           <span class="groupValue" ng-if="order.productID == 1" >Red</span>
+             <span class="groupValue" ng-if="order.productID == 2" >Green</span>
+             <span class="groupValue" ng-if="order.productID == 3" >Blue</span>
+             <span class="groupValue" ng-if="order.productID == 4" >Black</span>
+             <span class="groupValue" ng-if="order.productID == 5" >Yellow</span>
+             <span class="groupValue" ng-if="order.productID == 6" >White</span>
          </td>
 
          <td>
-             <span class="groupValue">{{order.quantity}}</span>
+             <span class="groupValue">{{order.qtyOrdered}}</span>
          </td>
          <td>
            <button class="large green button groupHeader" ng-show="order.group_by_key" ng-click="fulfillOrder(order.orderID)">Fulfill</button>
