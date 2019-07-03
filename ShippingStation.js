@@ -68,7 +68,7 @@ $scope.bot_url="http://ad289656.ngrok.io";
   $scope.botonedata = function() {
 
     var parameter = JSON.stringify({ "station": "SHIP", "bot": "11" });
-    url = $scope.server_url + 'api/trips/update/bot/departure'
+    url = $scope.server_url + '/trips/update/bot/departure'
     $http.post(url, parameter).
       success(function (data, status, headers, config) {
         // this callback will be called asynchronously
