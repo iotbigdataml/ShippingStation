@@ -1,7 +1,7 @@
-var app=angular.module("shippingstation",[]);
-app.controller("shippingcontroller",['$scope','$http', function($scope, $http){
+var app = angular.module("shippingstation", []);
+app.controller("shippingcontroller", ['$scope', '$http', function ($scope, $http) {
 
-// Fetch data from url every one second
+  // Fetch data from url every one second
 
   $http({
     method: 'GET',
@@ -17,10 +17,10 @@ app.controller("shippingcontroller",['$scope','$http', function($scope, $http){
   })
 
 
- setInterval(function(){
-  $http({
+  setInterval(function () {
+    $http({
       method: 'GET',
-      url: $scope.urlobj.url +'/api/orders/loaded'
+      url: $scope.urlobj.url + '/api/orders/loaded'
 
     }).then(function successCallback(response) {
 
@@ -31,157 +31,184 @@ app.controller("shippingcontroller",['$scope','$http', function($scope, $http){
       alert("Error. Try Again!");
 
     })
-},10000);
+  }, 10000);
 
-setInterval(function(){
+  setInterval(function () {
 
- $http({
-     method: 'GET',
-     url: $scope.urlobj.url+'/api/orders/cancelled'
+    $http({
+      method: 'GET',
+      url: $scope.urlobj.url + '/api/orders/cancelled'
 
-   }).then(function successCallback(response) {
+    }).then(function successCallback(response) {
 
-     $scope.cancelled = response.data;
+      $scope.cancelled = response.data;
 
-   }, function errorCallback(response) {
+    }, function errorCallback(response) {
 
-     alert("Error. Try Again!");
+      alert("Error. Try Again!");
 
-   })
-},10000);
-
-
-
-// Function to control bot one
-        $scope.botone = function(){
-          $http({
-              method: 'GET',
-              url: 'http://29041a89.ngrok.io/bot1'
-
-            }).then(function successCallback(response) {
+    })
+  }, 10000);
 
 
 
-            }, function errorCallback(response) {
+  // Function to control bot one
+  $scope.botone = function () {
 
-              alert("Error. Try Again!");
+    var parameter = JSON.stringify({ "station": "SHIP", "bot": "11" });
+    url = 'http://fae1f02e.ngrok.io/api//trips/update/bot/departure'
+    $http.post(url, parameter).
+      success(function (data, status, headers, config) {
+        // this callback will be called asynchronously
+        // when the response is available
+        console.log(data);
+      }).
+      error(function (data, status, headers, config) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+      });
 
-            });
+    $http({
+      method: 'GET',
+      url: 'http://29041a89.ngrok.io/bot1'
 
-
-        };
-
-// Function to control bot two
-
-        $scope.bottwo = function(){
-          $http({
-              method: 'GET',
-              url: 'http://29041a89.ngrok.io/bot2'
-
-            }).then(function successCallback(response) {
-
-
-
-
-            }, function errorCallback(response) {
-
-              alert("Error. Try Again!");
-
-            });
-
-
-        };
-
-// Function to put bots on maintenance
-
-        $scope.maintenenceOn = function(){
-          $http({
-              method: 'GET',
-              url: 'http://29041a89.ngrok.io/maintenance'
-
-            }).then(function successCallback(response) {
+    }).then(function successCallback(response) {
 
 
 
+    }, function errorCallback(response) {
 
-            }, function errorCallback(response) {
+      alert("Error. Try Again!");
 
-              alert("Error. Try Again!");
-
-            });
-
-
-        };
+    });
 
 
-        // Function to put bots out of maintenance
+  };
 
-                $scope.maintenenceOff = function(){
-                  $http({
-                      method: 'GET',
-                      url: 'http://29041a89.ngrok.io/maintenance'
+  // Function to control bot two
 
-                    }).then(function successCallback(response) {
+  $scope.bottwo = function () {
+    var parameter = JSON.stringify({ "station": "SHIP", "bot": "12" });
+    url = 'http://fae1f02e.ngrok.io/api//trips/update/bot/departure'
+    $http.post(url, parameter).
+      success(function (data, status, headers, config) {
+        // this callback will be called asynchronously
+        // when the response is available
+        console.log(data);
+      }).
+      error(function (data, status, headers, config) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+      });
+
+    $http({
+      method: 'GET',
+      url: 'http://29041a89.ngrok.io/bot2'
+
+    }).then(function successCallback(response) {
 
 
 
 
-                    }, function errorCallback(response) {
+    }, function errorCallback(response) {
 
-                      alert("Error. Try Again!");
+      alert("Error. Try Again!");
 
-                    });
-
-
-                };
+    });
 
 
-//Function to fulfill order on button click
+  };
 
-        $scope.fulfillOrder = function(id){
+  // Function to put bots on maintenance
+
+  $scope.maintenenceOn = function () {
+    $http({
+      method: 'GET',
+      url: 'http://29041a89.ngrok.io/maintenance'
+
+    }).then(function successCallback(response) {
 
 
-          $http({
-              method: 'GET',
-              url: $scope.urlobj.url+'/api/markOrderFilled/'+id
 
-            }).then(function successCallback(response) {
 
-            }, function errorCallback(response) {
+    }, function errorCallback(response) {
 
-              alert("Error. Try Again");
-            });
+      alert("Error. Try Again!");
 
-        }
+    });
+
+
+  };
+
+
+  // Function to put bots out of maintenance
+
+  $scope.maintenenceOff = function () {
+    $http({
+      method: 'GET',
+      url: 'http://29041a89.ngrok.io/maintenance'
+
+    }).then(function successCallback(response) {
+
+
+
+
+    }, function errorCallback(response) {
+
+      alert("Error. Try Again!");
+
+    });
+
+
+  };
+
+
+  //Function to fulfill order on button click
+
+  $scope.fulfillOrder = function (id) {
+
+
+    $http({
+      method: 'GET',
+      url: $scope.urlobj.url + '/api/markOrderFilled/' + id
+
+    }).then(function successCallback(response) {
+
+    }, function errorCallback(response) {
+
+      alert("Error. Try Again");
+    });
+
+  }
 
 
 }]);
 
 // filter to group orders by ID
 
-app.filter("groupBy",["$parse","$filter",function($parse,$filter){
-  return function(array,groupByField){
-    var result	= [];
-            var prev_item = null;
-            var groupKey = false;
-            var filteredData = $filter('orderBy')(array,groupByField);
-            for(var i=0;i<filteredData.length;i++){
-              groupKey = false;
-              if(prev_item !== null){
-                if(prev_item[groupByField] !== filteredData[i][groupByField]){
-                  groupKey = true;
-                }
-              } else {
-                groupKey = true;
-              }
-              if(groupKey){
-                filteredData[i]['group_by_key'] =true;
-              } else {
-                filteredData[i]['group_by_key'] =false;
-              }
-              result.push(filteredData[i]);
-              prev_item = filteredData[i];
-            }
-            return result;
+app.filter("groupBy", ["$parse", "$filter", function ($parse, $filter) {
+  return function (array, groupByField) {
+    var result = [];
+    var prev_item = null;
+    var groupKey = false;
+    var filteredData = $filter('orderBy')(array, groupByField);
+    for (var i = 0; i < filteredData.length; i++) {
+      groupKey = false;
+      if (prev_item !== null) {
+        if (prev_item[groupByField] !== filteredData[i][groupByField]) {
+          groupKey = true;
+        }
+      } else {
+        groupKey = true;
+      }
+      if (groupKey) {
+        filteredData[i]['group_by_key'] = true;
+      } else {
+        filteredData[i]['group_by_key'] = false;
+      }
+      result.push(filteredData[i]);
+      prev_item = filteredData[i];
+    }
+    return result;
   }
 }]);
