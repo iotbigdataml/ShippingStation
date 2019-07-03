@@ -1,26 +1,18 @@
 var app = angular.module("shippingstation", []);
+
+
+
 app.controller("shippingcontroller", ['$scope', '$http', function ($scope, $http) {
 
   // Fetch data from url every one second
-
-  $http({
-    method: 'GET',
-    url: 'http://127.0.0.1:8080/url.txt'
-  }).then(function successCallback(response) {
-
-    $scope.urlobj = response.data;
-
-  }, function errorCallback(response) {
-
-    alert("Error. Try Again!");
-
-  })
-
-
+$scope.server_url="http://34.239.133.107:3000/api";
+$scope.bot_url="http://ad289656.ngrok.io";
+///trips/update/bot/arrival
   setInterval(function () {
+
     $http({
       method: 'GET',
-      url: $scope.urlobj.url + '/api/orders/loaded'
+      url: $scope.server_url+'/orders/loaded'
 
     }).then(function successCallback(response) {
 
@@ -28,16 +20,15 @@ app.controller("shippingcontroller", ['$scope', '$http', function ($scope, $http
 
     }, function errorCallback(response) {
 
-      alert("Error. Try Again!");
 
     })
-  }, 10000);
+  }, 1000);
 
   setInterval(function () {
 
     $http({
       method: 'GET',
-      url: $scope.urlobj.url + '/api/orders/cancelled'
+      url: $scope.server_url+'/orders/cancelled'
 
     }).then(function successCallback(response) {
 
@@ -45,32 +36,20 @@ app.controller("shippingcontroller", ['$scope', '$http', function ($scope, $http
 
     }, function errorCallback(response) {
 
-      alert("Error. Try Again!");
+
 
     })
-  }, 10000);
+  }, 1000);
 
 
 
   // Function to control bot one
   $scope.botone = function () {
 
-    var parameter = JSON.stringify({ "station": "SHIP", "bot": "11" });
-    url = 'http://fae1f02e.ngrok.io/api//trips/update/bot/departure'
-    $http.post(url, parameter).
-      success(function (data, status, headers, config) {
-        // this callback will be called asynchronously
-        // when the response is available
-        console.log(data);
-      }).
-      error(function (data, status, headers, config) {
-        // called asynchronously if an error occurs
-        // or server returns response with an error status.
-      });
-
     $http({
+
       method: 'GET',
-      url: 'http://29041a89.ngrok.io/bot1'
+      url: $scope.bot_url+'/bot1'
 
     }).then(function successCallback(response) {
 
@@ -78,18 +57,18 @@ app.controller("shippingcontroller", ['$scope', '$http', function ($scope, $http
 
     }, function errorCallback(response) {
 
-      alert("Error. Try Again!");
+
+
 
     });
 
 
   };
 
-  // Function to control bot two
+  $scope.botonedata = function() {
 
-  $scope.bottwo = function () {
-    var parameter = JSON.stringify({ "station": "SHIP", "bot": "12" });
-    url = 'http://fae1f02e.ngrok.io/api//trips/update/bot/departure'
+    var parameter = JSON.stringify({ "station": "SHIP", "bot": "11" });
+    url = $scope.server_url + 'api/trips/update/bot/departure'
     $http.post(url, parameter).
       success(function (data, status, headers, config) {
         // this callback will be called asynchronously
@@ -101,9 +80,16 @@ app.controller("shippingcontroller", ['$scope', '$http', function ($scope, $http
         // or server returns response with an error status.
       });
 
+  };
+
+  // Function to control bot two
+
+  $scope.bottwo = function () {
+
+
     $http({
       method: 'GET',
-      url: 'http://29041a89.ngrok.io/bot2'
+      url: $scope.bot_url+'/bot2'
 
     }).then(function successCallback(response) {
 
@@ -112,10 +98,27 @@ app.controller("shippingcontroller", ['$scope', '$http', function ($scope, $http
 
     }, function errorCallback(response) {
 
-      alert("Error. Try Again!");
+
 
     });
 
+
+  };
+
+  $scope.bottwodata = function(){
+
+    var parameter = JSON.stringify({ "station": "SHIP", "bot": "12" });
+    url = $scope.server_url + '/trips/update/bot/departure'
+    $http.post(url, parameter).
+      success(function (data, status, headers, config) {
+        // this callback will be called asynchronously
+        // when the response is available
+        console.log(data);
+      }).
+      error(function (data, status, headers, config) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+      });
 
   };
 
@@ -124,7 +127,7 @@ app.controller("shippingcontroller", ['$scope', '$http', function ($scope, $http
   $scope.maintenenceOn = function () {
     $http({
       method: 'GET',
-      url: 'http://29041a89.ngrok.io/maintenance'
+      url: $scope.bot_url+'/entermaintenance'
 
     }).then(function successCallback(response) {
 
@@ -133,7 +136,6 @@ app.controller("shippingcontroller", ['$scope', '$http', function ($scope, $http
 
     }, function errorCallback(response) {
 
-      alert("Error. Try Again!");
 
     });
 
@@ -146,7 +148,7 @@ app.controller("shippingcontroller", ['$scope', '$http', function ($scope, $http
   $scope.maintenenceOff = function () {
     $http({
       method: 'GET',
-      url: 'http://29041a89.ngrok.io/maintenance'
+      url: $scope.bot_url+'/exitmaintenance'
 
     }).then(function successCallback(response) {
 
@@ -155,7 +157,7 @@ app.controller("shippingcontroller", ['$scope', '$http', function ($scope, $http
 
     }, function errorCallback(response) {
 
-      alert("Error. Try Again!");
+
 
     });
 
@@ -170,13 +172,13 @@ app.controller("shippingcontroller", ['$scope', '$http', function ($scope, $http
 
     $http({
       method: 'GET',
-      url: $scope.urlobj.url + '/api/markOrderFilled/' + id
+      url: $scope.server_url+'/markOrderFilled/' + id
 
     }).then(function successCallback(response) {
 
     }, function errorCallback(response) {
 
-      alert("Error. Try Again");
+
     });
 
   }
